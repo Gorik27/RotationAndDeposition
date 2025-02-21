@@ -618,6 +618,8 @@ class App(QMainWindow, design.Ui_MainWindow):
             pass
         except ValueError:
             pass
+        except KeyError:
+            pass
         self.geometry_cbar = self.geometry_vl.canvas.figure.colorbar(im,
                                                                      fraction=0.046, 
                                                                      pad=0.04,
@@ -743,6 +745,8 @@ class App(QMainWindow, design.Ui_MainWindow):
         except AttributeError:
             pass
         except ValueError:
+            pass
+        except KeyError:
             pass
         self.film_cbar = self.geometry_vl.canvas.figure.colorbar(im,
                                                                  fraction=0.046, 
