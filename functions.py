@@ -123,11 +123,14 @@ class Model(QObject):
         self.k_step = k_step
         self.NR_step = NR_step
         if rotation_type == 'Planet':
-            R_min_self = holder_inner_radius+self.substrate_radius
+            R_min_self = 0#holder_inner_radius+self.substrate_radius
             R_max_self = holder_outer_radius-self.substrate_radius
         else:
-            R_min_self = holder_inner_radius+substrate_x_len/2
-            R_max_self = holder_outer_radius*cos(arcsin(substrate_y_len/2/holder_outer_radius))-substrate_x_len/2
+            R_min_self = 0#holder_inner_radius+substrate_x_len/2
+            if substrate_shape == 'Circle':
+                R_max_self = holder_outer_radius-self.substrate_radius
+            else:
+                R_max_self = holder_outer_radius*cos(arcsin(substrate_y_len/2/holder_outer_radius))-substrate_x_len/2
             k_min = 1
             k_max = 1
         if R_min_self>R_max_self:

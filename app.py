@@ -309,7 +309,7 @@ class App(QMainWindow, design.Ui_MainWindow):
         self.table_settings.setColumnWidth(i, self.table_settings.columnWidth(i)*resize)
         i = self.settings.index_units
         resize = 0.5
-        self.table_settings.setColumnWidth(i, self.table_settings.columnWidth(i)*resize)
+        self.table_settings.setColumnWidth(i, int(self.table_settings.columnWidth(i)*resize))
         self.table_settings.horizontalHeader().setStretchLastSection(True)
         ### optimize tab
         self.opt_settings = QSortFilterProxyModel()
