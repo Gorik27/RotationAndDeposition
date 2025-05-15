@@ -132,6 +132,7 @@ class App(QMainWindow, design.Ui_MainWindow):
         self.table_settings_opt.setEditTriggers(QAbstractItemView.CurrentChanged)
         self.table_settings.enter_pressed.connect(self.select_enter)
         self.DepositionButton.clicked.connect(self.deposition)
+        self.autoDepBtn.clicked.connect(self.deposition_auto_init)
         self.cancel_dep_button.clicked.connect(self.deposition_stop)
         self.update_model_Button.clicked.connect(self.update_model)
         self.save_settings_Button.triggered.connect(self.save_settings)
