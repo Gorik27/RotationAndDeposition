@@ -40,7 +40,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="Model">
        <attribute name="title">
@@ -618,6 +618,13 @@
                </widget>
               </item>
               <item>
+               <widget class="QPushButton" name="autoDepBtn">
+                <property name="text">
+                 <string>Использовать скрипт</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QPushButton" name="DepositionButton">
                 <property name="toolTip">
                  <string>Press Enter</string>
@@ -867,7 +874,7 @@
      <x>0</x>
      <y>0</y>
      <width>1400</width>
-     <height>31</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
