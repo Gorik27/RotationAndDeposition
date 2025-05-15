@@ -180,6 +180,7 @@ class App(QMainWindow, design.Ui_MainWindow):
         self.thick_edit.unfocused.connect(self.enable_return_shortcut)
         self.tolerance_edit.editingFinished.connect(self.set_settings)
         self.sub_res_edit.editingFinished.connect(self.set_settings)
+        self.auto_cnt = 0
         
     
     @pyqtSlot()    
@@ -638,19 +639,45 @@ class App(QMainWindow, design.Ui_MainWindow):
         profile_app.show()
         
     @pyqtSlot()
-    def deposition(self):
+    def deposition(self, args=False):
         self.deposition_output.setText('')
         self.dep_terminated=False
         self.dep_msg = []
         self.DepositionButton.setDisabled(True)
         self.disable_return_shortcut()
         self.cancel_dep_button.setDisabled(False)
-        args = [self.R, self.k, self.NR, 1, self.model.alpha0_sub, 
-                self.model.tolerance]
+        if not args:
+            args = [self.R, self.k, self.NR, 1, self.model.alpha0_sub, 
+                    self.model.tolerance]
         self.model.deposition.task(*args)
         self.p_dep_bar.setValue(0)
         self.model.deposition.start()
-        
+
+    @pyqtSlot()
+    def deposition_auto_init(self):
+        self.args_list = load()
+        self.auto_cnt = 0
+        self.model.deposition.finished.disconnect()
+        self.model.deposition.finished.connect(self.deposition_auto)
+
+        self.deposition_auto()
+    
+    @pyqtSlot()
+    def deposition_auto(self):
+        if self.auto_cnt == len(self.args_list):
+            self.model.deposition.finished.disconnect()
+            self.model.deposition.finished.connect(self.deposition_plot)
+        else:
+            I = self.model.deposition.hs
+            het = self.model.heterogeneity(I)
+            thickness = I.mean()
+            omega = thickness/self.h
+            proc_time = self.NR/omega
+            t = self.model.deposition.time[-1]
+            args = self.args_list[self.auto_cnt]
+            self.auto_cnt += 1
+            self.deposition(args)
+
     def closeEvent(self, event):
         event.accept()
         for window in self.childs:
